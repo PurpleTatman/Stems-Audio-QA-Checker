@@ -3,7 +3,7 @@ name: Build macOS Executable
 on:
   release:
     types: [published]
-  workflow_dispatch: # Allows the manual button
+  workflow_dispatch:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -27,7 +27,7 @@ jobs:
           pip install pyinstaller numpy soundfile
 
       - name: Build with PyInstaller
-        # Double-check this filename matches your script exactly!
+        # IMPORTANT: Ensure 'stem_checker.py' matches your actual filename exactly!
         run: |
           python -m PyInstaller --onefile --windowed stem_checker.py
 
@@ -37,6 +37,5 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: dist/stem_checker
           asset_name: stem_checker_mac
-          tag: ${{ github.event.release.tag_name }} # Works for new releases
-          tag_name: latest # FALLBACK: Tells manual runs to just find the newest release
+          tag: v0.50
           overwrite: true
