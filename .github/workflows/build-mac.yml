@@ -2,8 +2,8 @@ name: Build macOS Executable
 
 on:
   release:
-    types: [published, created, released] # Covers all bases
-  workflow_dispatch: # Gives you the manual "Run Workflow" button
+    types: [published]
+  workflow_dispatch: # Allows the manual button
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -27,7 +27,7 @@ jobs:
           pip install pyinstaller numpy soundfile
 
       - name: Build with PyInstaller
-        # IMPORTANT: This must match your .py file name exactly (case-sensitive!)
+        # Double-check this filename matches your script exactly!
         run: |
           python -m PyInstaller --onefile --windowed stem_checker.py
 
@@ -37,5 +37,6 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: dist/stem_checker
           asset_name: stem_checker_mac
-          tag: ${{ github.event.release.tag_name || github.ref_name }}
+          tag: ${{ github.event.release.tag_name }} # Works for new releases
+          tag_name: latest # FALLBACK: Tells manual runs to just find the newest release
           overwrite: true
