@@ -22,7 +22,11 @@ A simple utility to batch-check and organize audio stems before you send them of
 
 * **Mac:** Check Releases.
 Note: Because this is an unsigned binary, macOS may block it or strip its permissions on download.
+
 To Open: Right-click stem_checker_mac and select Open.
+
 If it won't launch: Open Terminal and run:
+
 chmod +x ~/Downloads/stem_checker_mac
+
 (I also don't know what I'm doing and defintely have no clue if this Mac version works.)
