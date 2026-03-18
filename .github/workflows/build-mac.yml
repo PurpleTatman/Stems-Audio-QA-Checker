@@ -3,7 +3,10 @@ name: Build macOS Executable
 on:
   release:
     types: [published]
-  workflow_dispatch: # This adds the "Run workflow" button in the Actions tab
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build-mac:
@@ -24,6 +27,7 @@ jobs:
           pip install pyinstaller numpy soundfile
 
       - name: Build with PyInstaller
+        # Make sure the filename below matches your .py file exactly
         run: |
           python -m PyInstaller --onefile --windowed stem_checker.py
 
@@ -33,5 +37,5 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: dist/stem_checker
           asset_name: stem_checker_mac
-          tag: ${{ github.ref }}
+          tag: ${{ github.ref_name }} # Use the branch/tag name
           overwrite: true
