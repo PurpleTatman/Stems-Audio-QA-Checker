@@ -2,7 +2,8 @@ name: Build macOS Executable
 
 on:
   release:
-    types: [published] # This triggers the build when you publish a Release
+    types: [published]
+  workflow_dispatch: # This adds the "Run workflow" button in the Actions tab
 
 jobs:
   build-mac:
