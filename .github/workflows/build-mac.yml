@@ -2,8 +2,7 @@ name: Build macOS Executable
 
 on:
   release:
-    types: [published]
-  workflow_dispatch:
+    types: [published] # This is the "clean" way to trigger it
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -27,7 +26,7 @@ jobs:
           pip install pyinstaller numpy soundfile
 
       - name: Build with PyInstaller
-        # Make sure the filename below matches your .py file exactly
+        # IMPORTANT: Replace 'stem_checker.py' below if your file is named differently
         run: |
           python -m PyInstaller --onefile --windowed stem_checker.py
 
@@ -37,5 +36,5 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: dist/stem_checker
           asset_name: stem_checker_mac
-          tag: ${{ github.ref_name }} # Use the branch/tag name
+          tag: ${{ github.event.release.tag_name }}
           overwrite: true
